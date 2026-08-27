@@ -18,8 +18,9 @@ class authController {
 
             res.cookie("token", user.token, {
                 httpOnly: true,
-                secure: false,
-                sameSite: "lax",
+                secure: process.env.NODE_ENV === "production",
+                sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+                maxAge: 24 * 60 * 60 * 1000,
             });
 
             res.status(201).json({

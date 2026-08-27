@@ -1,8 +1,14 @@
 import React, { useState } from 'react'
+import { useDispatch } from "react-redux";
 import { validationSignup } from '../validator/auth.validator';
+import { signupApi } from '../services/auth.service';
+import { setUser } from '../../../redux/slice/authSlice';
 
 const useSignup = () => {
     const [error, setError] = useState({});
+    const [loading, setLoading] = useState(false)
+    const dispatch = useDispatch();
+    useNavigate()
     const [formData, setFormData] = useState({
         firstName: "",
         lastName: "",
@@ -24,6 +30,19 @@ const useSignup = () => {
         }))
     }
 
+    const signup = async () => {
+        try {
+            setLoading(true);
+            const result = await signupApi(formData)
+            dispatch(setUser(result.data.data))
+
+        } catch (error) {
+            console.error(error)
+        } finally {
+            setLoading(error)
+        }
+    }
+
     const submitHandler = (e) => {
         e.preventDefault();
 
@@ -34,6 +53,7 @@ const useSignup = () => {
         }
 
         setError({})
+        signup()
         console.log(formData)
     }
     return {

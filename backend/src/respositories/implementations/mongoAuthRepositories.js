@@ -5,7 +5,9 @@ import IAuthRepository from "../contracts/IAuthRepositories.js";
 class mongoAuthRepository extends IAuthRepository {
     async authRegister(data) {
         try {
-            const user = await userModel.create(data)
+            const res = await userModel.create(data);
+            const user = res.toObject();
+            delete user.password
             return user;
         } catch (error) {
            throw new AppError(`Failed to register user: ${error.message}`, 500, error) 
@@ -14,7 +16,7 @@ class mongoAuthRepository extends IAuthRepository {
 
     async authFindByEmail (email) {
         try {
-            const user = await userModel.findOne({email})
+            const user = await userModel.findOne({email});
             return user;
         } catch (error) {
            throw new AppError(`Failed to find user by email: ${error.message}`, 500, error) 
