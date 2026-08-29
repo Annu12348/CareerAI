@@ -6,9 +6,8 @@ class mongoAuthRepository extends IAuthRepository {
     async authRegister(data) {
         try {
             const res = await userModel.create(data);
-            const user = res.toObject();
-            delete user.password
-            return user;
+            
+            return res;
         } catch (error) {
            throw new AppError(`Failed to register user: ${error.message}`, 500, error) 
         }

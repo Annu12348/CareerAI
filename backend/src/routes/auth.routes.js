@@ -12,4 +12,9 @@ router.post(
     authControllers.register.bind(authControllers)
 )
 
+router.post(
+    "/login",
+    authControllers.login.bind(authControllers)
+)
+
 export default router;

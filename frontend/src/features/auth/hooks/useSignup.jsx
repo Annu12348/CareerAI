@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useRouter } from "next/navigation";
 import { useDispatch } from "react-redux";
 import { validationSignup } from '../validator/auth.validator';
 import { signupApi } from '../services/auth.service';
@@ -7,8 +8,8 @@ import { setUser } from '../../../redux/slice/authSlice';
 const useSignup = () => {
     const [error, setError] = useState({});
     const [loading, setLoading] = useState(false)
-    const dispatch = useDispatch();
-    useNavigate()
+    const dispatch = useDispatch()
+    const router = useRouter()
     const [formData, setFormData] = useState({
         firstName: "",
         lastName: "",
@@ -26,27 +27,38 @@ const useSignup = () => {
 
         setError((prev) => ({
             ...prev,
-            [name]: ""
+            [name]: "",
+            general: ""
         }))
     }
 
     const signup = async () => {
         try {
             setLoading(true);
+
             const result = await signupApi(formData)
             dispatch(setUser(result.data.data))
-
+            router.push("/auth/login");
         } catch (error) {
-            console.error(error)
+            console.error("signup error:", error);
+
+            setError({
+                general:
+                    error?.response?.data?.message ||
+                    "Signup failed. Please try again.",
+            })
         } finally {
-            setLoading(error)
+            setLoading(false)
         }
     }
 
     const submitHandler = (e) => {
         e.preventDefault();
 
+        if (loading) return;
+
         const validationError = validationSignup(formData);
+
         if (Object.keys(validationError).length > 0) {
             setError(validationError);
             return;
@@ -59,6 +71,7 @@ const useSignup = () => {
     return {
         formData,
         error,
+        loading,
         changeHandler,
         submitHandler
     }

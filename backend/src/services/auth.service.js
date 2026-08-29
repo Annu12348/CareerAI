@@ -3,6 +3,7 @@ import jwt from 'jsonwebtoken'
 import mongoAuthRepository from "../respositories/implementations/mongoAuthRepositories.js";
 import AppError from "../utils/error.js";
 import { config } from "../config/config.js";
+import { generateAccessToken, generateRefreshToken } from "../utils/token.js";
 
 class authServices {
     constructor() {
@@ -24,15 +25,31 @@ class authServices {
             throw new Error("user created error", 401)
         }
 
-        const token = jwt.sign(
-            { id: user._id, role: user.role },
-            config.JWT_SECRET_KEY,
-            { expiresIn: "1d" }
-        )
+        return user;
+    }
+
+    async authLogin(email, password) {
+       email = email.trim().toLowerCase();
+
+        const user = await this.mongoAuthRepository.authFindByEmail(email);
+
+        if (!user) {
+            throw new AppError("Invalid email or password.", 401)
+        }
+
+        const matchPassword = await bcrypt.compare(password, user.password)
+
+        if (!matchPassword) {
+            throw new AppError("Invalid email or password.", 401)
+        }
+
+        const access = generateAccessToken(user)
+        const refresh = generateRefreshToken(user)
 
         return {
-            user, 
-            token
+            user,
+            access,
+            refresh
         };
     }
 }
