@@ -1,15 +1,16 @@
-import authServices from "../services/auth.service.js";
+import userServices from "../services/user.service.js";
+import AppError from "../utils/error.js";
 
-class authController {
+class userController {
     constructor() {
-        this.authServices = new authServices()
+        this.userServices = new userServices()
     }
 
     async register(req, res, next) {
         try {
             const { firstName, lastName, email, password } = req.body
 
-            const user = await this.authServices.authRegister({
+            const user = await this.userServices.register({
                 firstName,
                 lastName,
                 email,
@@ -40,7 +41,7 @@ class authController {
         try {
             const { email, password } = req.body;
 
-            const result = await this.authServices.authLogin(email, password)
+            const result = await this.userServices.login(email, password)
 
             res.cookie("accessToken", result.access, {
                 httpOnly: true,
@@ -78,10 +79,38 @@ class authController {
                 },
             })
         } catch (error) {
-            console.error(error)
             next(error);
+        }
+    }
+
+    async refresh(req, res, next) {
+        try {
+            const refresh = req.cookies.refreshToken;
+
+            if (!refresh) {
+                throw new AppError("Refresh token not found", 404)
+            }
+
+            const newAccessToken = await this.userServices.refreshToken(refresh)
+
+            res.cookie("accessToken", newAccessToken, {
+                httpOnly: true,
+                secure: process.env.NODE_ENV === "production",
+                sameSite:
+                    process.env.NODE_ENV === "production"
+                        ? "none"
+                        : "lax",
+                maxAge: 15 * 60 * 1000,
+            });
+
+            res.status(200).json({
+                success: true,
+                message: "Access token refreshed successfully"
+            })
+        } catch (error) {
+            next(error)
         }
     }
 }
 
-export default authController;
+export default userController;

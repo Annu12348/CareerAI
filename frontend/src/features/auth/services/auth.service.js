@@ -5,3 +5,9 @@ export const signupApi = async (data) => {
         withCredentials: true
     })
 }
+
+export const loginApi = async (data) => {
+    return await instance.post("/auth/login", data, {
+        withCredentials: true
+    })
+}

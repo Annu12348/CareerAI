@@ -32,3 +32,19 @@ export const registerValidator = [
         .isLength({ min: 8, max: 128 })
         .withMessage("Password must be between 8 and 128 characters"),
 ]
+
+export const loginValidator = [
+    body("email")
+        .trim()
+        .notEmpty()
+        .withMessage("Email is required")
+        .isEmail()
+        .withMessage("Please enter a valid email")
+        .normalizeEmail(),
+
+    body("password")
+        .notEmpty()
+        .withMessage("Password is required")
+        .isString()
+        .withMessage("Password must be a string"),
+];

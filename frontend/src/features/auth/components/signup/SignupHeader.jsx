@@ -1,24 +1,24 @@
 import Link from 'next/link'
 import React from 'react'
 
-const SignupHeader = () => {
+const SignupHeader = ({ textLeft, textRight, text, link }) => {
     return (
         <div className="flex items-center justify-between">
             <div>
                 <h1 className="text-xl font-semibold tracking-tight">
-                    Create your account
+                    {textLeft}
                 </h1>
                 <p className="text-sm tracking-tight font-light">
                     Join thousands of learners and developers
                 </p>
             </div>
             <p className="text-sm tracking-tight">
-                Already have an account?{" "}
+                {textRight}{" "}
                 <Link
-                    href="/login"
+                    href={link}
                     className="text-blue-600"
                 >
-                    Sign in
+                    {text}
                 </Link>
             </p>
         </div>

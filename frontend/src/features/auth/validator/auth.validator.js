@@ -40,3 +40,22 @@ export const validationSignup = (formData) => {
 
     return errors;
 };
+
+export const validationLogin = (formData) => {
+    const errors = {};
+
+    const email = formData.email.trim();
+    const password = formData.password;
+
+    if (!email) {
+        errors.email = "Email is required";
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        errors.email = "invalid email or password";
+    }
+
+    if (!password) {
+        errors.password = "inValid email or password";
+    } 
+
+    return errors;
+}

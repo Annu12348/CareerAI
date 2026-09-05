@@ -9,14 +9,19 @@ import SignupFooter from "./SignupFooter";
 import useSignup from "../../hooks/useSignup";
 
 
-const SignupRight = () => {
+const SignupForm = () => {
     const { formData, error, changeHandler, submitHandler } = useSignup()
     console.log(error)
 
     return (
         <div className="w-[74%] h-[100vh] p-7 flex items-center justify-center">
             <div className="w-[78%] border-2 border-zinc-100 py-3 px-5 shadow text-black rounded-lg">
-                <SignupHeader />
+                <SignupHeader
+                    textLeft="Create your account"
+                    textRight="Already have an account?"
+                    text="Sign in"
+                    link="/auth/login"
+                />
                 <SocialSignup />
                 <AuthDivider />
                 <form
@@ -59,7 +64,7 @@ const SignupRight = () => {
                         onChange={changeHandler}
                         error={error.password}
                     />
-                    <Button />
+                    <Button text="create account" submit="submit" />
                 </form>
                 <SignupFooter />
             </div>
@@ -67,4 +72,4 @@ const SignupRight = () => {
     );
 };
 
-export default SignupRight;
+export default SignupForm;
