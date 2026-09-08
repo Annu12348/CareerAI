@@ -6,7 +6,7 @@ export const generateAccessToken = (user) => {
     const access = jwt.sign(
         { _id: user._id, user: user.role },
         config.JWT_ACCESS_SECRET_KEY,
-        { expiresIn: "1M" }
+        { expiresIn: "15M" }
     )
 
     return access
@@ -50,9 +50,9 @@ export const refreshTokenVerify = (token) => {
         return decoded;
     } catch (error) {
         if (error.name === "TokenExpiredError") {
-            throw new AppError("Access token expired", 401);
+            throw new AppError("Refresh token expired", 401);
         }
 
-        throw new AppError("Invalid access token", 401);
+        throw new AppError("Invalid refresh token", 401);
     }
 }

@@ -1,5 +1,9 @@
+import userModel from "../model/user.model.js";
+import mongoUserRepository from "../respositories/implementations/mongoUserRepository.js";
 import AppError from "../utils/error.js";
 import { accessTokenVerify } from "../utils/token.js";
+
+const mongoUserRepositories = new mongoUserRepository()
 
 export const authenticationUser = async (req, res, next) => {
     const accessToken = req.cookies.accessToken;
@@ -10,9 +14,10 @@ export const authenticationUser = async (req, res, next) => {
 
     const decoded = accessTokenVerify(accessToken);
 
-    console.log(decoded._id)
+    const user = await mongoUserRepositories.findById(decoded._id)
 
-    req.user = decoded;
+    req.id = user._id;
+    req.user = user
 
     next();
 }

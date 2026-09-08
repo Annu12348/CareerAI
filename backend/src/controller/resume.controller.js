@@ -7,7 +7,9 @@ class ResumeController {
 
     async create(req, res, next) {
         try {
-            const resume = await this.ResumeService.create(req.body);
+            const userId = req.id;
+
+            const resume = await this.ResumeService.create(req.body, userId);
 
             res.status(201).json({
                 message: "resume success fully created",
