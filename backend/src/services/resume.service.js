@@ -9,7 +9,6 @@ class ResumeSevices {
     }
 
     async create (data, userId) {
-        console.log(userId)
         data.personalInfo.email = data.personalInfo.email.toLowerCase().trim()
 
         const resume = await this.mongoResumeRespository.create(data);

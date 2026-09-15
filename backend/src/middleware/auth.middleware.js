@@ -1,4 +1,3 @@
-import userModel from "../model/user.model.js";
 import mongoUserRepository from "../respositories/implementations/mongoUserRepository.js";
 import AppError from "../utils/error.js";
 import { accessTokenVerify } from "../utils/token.js";
