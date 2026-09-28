@@ -8,6 +8,7 @@ import Button from '../../../../components/ui/Button'
 import SignupFooter from '../signup/SignupFooter'
 import SignupHeader from '../signup/SignupHeader'
 import useLogin from '../../hooks/useLogin'
+import Link from 'next/link';
 
 const LoginForm = () => {
     const { error, loading, formData, changeHandler, submitHandler } = useLogin()
@@ -47,7 +48,12 @@ const LoginForm = () => {
                         onChange={changeHandler}
                         error={error.password}
                     />
-
+                    <Link 
+                    href="/auth/forget-password"
+                    className='text-red-500 capitalize tracking-tight leading-none w-full flex mt-5 items-center justify-end '
+                    >
+                        forget password
+                    </Link>
                     <Button text="login" submit="submit" />
                 </form>
                 <SignupFooter />

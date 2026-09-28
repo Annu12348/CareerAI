@@ -111,6 +111,21 @@ class userController {
             next(error)
         }
     }
+
+    async email(req, res, next) {
+        try {
+            const { email } = req.body;
+
+            const user = await this.userServices.email(email);
+
+            res.status(200).json({
+                message: "successfully email find",
+                data: user
+            })
+        } catch (error) {
+            next (error)
+        }
+    }
 }
 
 export default userController;

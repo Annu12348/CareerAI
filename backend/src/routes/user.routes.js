@@ -21,6 +21,11 @@ router.post(
 )
 
 router.post(
+    "/forget-password",    
+    userControllers.email.bind(userControllers)
+)
+
+router.post(
     "/refresh",
     userControllers.refresh.bind(userControllers)
 )

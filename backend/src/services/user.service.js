@@ -2,6 +2,8 @@ import bcrypt from "bcryptjs"
 import mongoUserRepository from "../respositories/implementations/mongoUserRepository.js";
 import AppError from "../utils/error.js";
 import { generateAccessToken, generateRefreshToken, refreshTokenVerify } from "../utils/token.js";
+import redis from "../redis/redis.js";
+import { emailQueue } from "../queues/email.queue.js";
 
 class userServices {
     constructor() {
@@ -27,7 +29,7 @@ class userServices {
     }
 
     async login(email, password) {
-       email = email.trim().toLowerCase();
+        email = email.trim().toLowerCase();
 
         const user = await this.mongoUserRepository.findByEmail(email);
 
@@ -51,7 +53,7 @@ class userServices {
         };
     }
 
-    async refreshToken (refreshToken) {
+    async refreshToken(refreshToken) {
         const decoded = await refreshTokenVerify(refreshToken)
 
         const user = await this.mongoUserRepository.findById(decoded._id)
@@ -63,6 +65,35 @@ class userServices {
         const newAccessToken = generateAccessToken(user)
 
         return newAccessToken;
+    }
+
+    async email(email) {
+        const user = await this.mongoUserRepository.findByEmail(email);
+
+        if (!user) {
+            throw new AppError("User not found", 404);
+        }
+
+        const otp = Math.floor(100000 + Math.random() * 900000).toString()
+
+        await redis.set(
+            `password-reset: ${email}`,
+            otp,
+            "EX",
+            300
+        )
+
+        await emailQueue.add(
+            "sentOtp",
+            {
+                email,
+                otp
+            }
+        )
+
+        return {
+            message: "OTP sent successfully",
+        };
     }
 }
 
