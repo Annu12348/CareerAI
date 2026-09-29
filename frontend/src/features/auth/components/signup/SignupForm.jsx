@@ -6,7 +6,7 @@ import SignupHeader from "./SignupHeader";
 import SocialSignup from "./SocialSignup";
 import AuthDivider from "./AuthDivider";
 import SignupFooter from "./SignupFooter";
-import useSignup from "../../hooks/useSignup";
+import useSignup from "../../../hooks/useSignup";
 
 
 const SignupForm = () => {

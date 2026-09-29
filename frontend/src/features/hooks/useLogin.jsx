@@ -5,7 +5,7 @@ import { validationLogin } from '../validator/auth.validator';
 import { loginApi } from '../services/auth.service';
 import { useRouter } from "next/navigation";
 import { useDispatch } from 'react-redux';
-import { setUser } from '../../../redux/slice/authSlice';
+import { setUser } from '../redux/slice/authSlice';
 
 const useLogin = () => {
     const [error, setError] = useState({});

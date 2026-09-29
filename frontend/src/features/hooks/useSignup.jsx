@@ -3,7 +3,7 @@ import { useRouter } from "next/navigation";
 import { useDispatch } from "react-redux";
 import { validationSignup } from '../validator/auth.validator';
 import { signupApi } from '../services/auth.service';
-import { setUser } from '../../../redux/slice/authSlice';
+import { setUser } from '../redux/slice/authSlice';
 
 const useSignup = () => {
     const [error, setError] = useState({});
