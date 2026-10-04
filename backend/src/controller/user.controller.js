@@ -118,12 +118,21 @@ class userController {
 
             const user = await this.userServices.email(email);
 
-            res.status(200).json({
-                message: "successfully email find",
-                data: user
-            })
+            res.status(200).json(user)
         } catch (error) {
-            next (error)
+            next(error)
+        }
+    }
+
+    async otpVerify(req, res, next) {
+        try {
+            const { email, otp } = req.body
+
+            const result = await this.userServices.verifyOtp(email, otp)
+
+            res.status(200).json(result)
+        } catch (error) {
+            next(error)
         }
     }
 }

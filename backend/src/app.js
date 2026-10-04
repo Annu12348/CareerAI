@@ -4,17 +4,13 @@ import cors from 'cors'
 import userRoutes from "./routes/user.routes.js"
 import errorHandlingMiddleware from './middleware/errorHandling.middleware.js';
 import resumeRoutes from "./routes/resume.routes.js"
-
-const allowedOrigins = [
-  "http://localhost:3000",
-  "https://career-ai-woad.vercel.app",
-];
+import { config } from './config/config.js';
 
 const app = express();
 app.use(express.json())
 app.use(
     cors({
-      origin: allowedOrigins,
+      origin: config.FRONT_END_URL,
       credentials: true,
     })
   );

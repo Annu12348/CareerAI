@@ -48,3 +48,56 @@ export const loginValidator = [
         .isString()
         .withMessage("Password must be a string"),
 ];
+
+export const forgetPasswordValidation = [
+    body("email")
+        .trim()
+        .notEmpty()
+        .withMessage("Email is required")
+        .isEmail()
+        .withMessage("Please provide a valid email")
+        .normalizeEmail()
+]
+
+export const verifyOtpValidation = [
+    body("email")
+        .trim()
+        .notEmpty()
+        .withMessage("Email is required")
+        .isEmail()
+        .withMessage("Please provide a valid email")
+        .normalizeEmail(),
+
+    body("otp")
+        .trim()
+        .notEmpty()
+        .withMessage("OTP is required")
+        .isLength({ min: 6, max: 6 })
+        .withMessage("OTP must be 6 digits")
+        .isNumeric()
+        .withMessage("OTP must contain only numbers")
+];
+
+export const resetPasswordValidation = [
+    body("newPassword")
+        .trim()
+        .notEmpty()
+        .withMessage("New password is required")
+        .isLength({
+            min: 8,
+            max: 128,
+        })
+        .withMessage("Password must be between 8 and 128 characters"),
+
+    body("confirmPassword")
+        .trim()
+        .notEmpty()
+        .withMessage("Confirm password is required")
+        .custom((value, { req }) => {
+            if (value !== req.body.newPassword) {
+                throw new Error("Passwords do not match");
+            }
+
+            return true;
+        }),
+];

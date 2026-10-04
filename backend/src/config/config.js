@@ -3,7 +3,7 @@ dotenv.config();
 
 export const config = {
     PORT: process.env.PORT,
-    
+
     MONGODB_URL: process.env.MONGODB_URL,
 
     JWT_ACCESS_SECRET_KEY: process.env.JWT_ACCESS_SECRET_KEY,
@@ -16,4 +16,6 @@ export const config = {
 
     MAIL_EMAIL: process.env.MAIL_EMAIL,
     MAIL_PASS: process.env.MAIL_PASS,
+
+    FRONT_END_URL: process.env.FRONT_END_URL
 }
