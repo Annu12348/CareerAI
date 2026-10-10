@@ -10,6 +10,10 @@ class IUserRepository {
     async findById(userId) {
         throw new Error("method not implement")
     }
+
+    async resetPasswordByEmail(email, hashedPassword) {
+        throw new Error("method not implement")
+    }
 } 
 
 export default IUserRepository;

@@ -8,8 +8,22 @@ import Button from '../../../../components/ui/Button';
 import useForgetPassword from '../../../hooks/useForgetPassword';
 
 const ForgetPassword = () => {
-    const { submitHandler, page, email, emailChangeHandler, otp, otpChangeHandler, password, passwordChangeHandler } = useForgetPassword();
-    
+    const {
+        submitHandler1,
+        submitHandler2,
+        submitHandler3,
+
+        email,
+        otp,
+        password,
+
+        emailChangeHandler,
+        otpChangeHandler,
+        passwordChangeHandler,
+
+        page
+    } = useForgetPassword();
+
     return (
         <div className="w-[74%] h-screen p-7 flex items-center justify-center">
             <div className='py-3 px-4 rounded-lg bg-zinc-300 w-[60%]  ' >
@@ -27,7 +41,7 @@ const ForgetPassword = () => {
                 {page == 1 && (
                     <form
                         className='mt-4 text-black'
-                        onSubmit={submitHandler}
+                        onSubmit={submitHandler1}
                     >
                         <Input
                             label="email"
@@ -43,12 +57,12 @@ const ForgetPassword = () => {
                 {page == 2 && (
                     <form
                         className='mt-4 text-black'
-                        onSubmit={submitHandler}
+                        onSubmit={submitHandler2}
                     >
                         <Input
                             label="OTP"
                             placeholder="Enter your otp..."
-                            type="number"
+                            type="text"
                             name="otp"
                             value={otp}
                             onChange={otpChangeHandler}
@@ -59,14 +73,14 @@ const ForgetPassword = () => {
                 {page == 3 && (
                     <form
                         className='mt-4 text-black'
-                        onSubmit={submitHandler}
+                        onSubmit={submitHandler3}
                     >
                         <Input
-                            label="old password"
-                            placeholder="Enter your old password..."
+                            label="new password"
+                            placeholder="Enter your new password..."
                             type="password"
-                            name="oldPassword"
-                            value={password.oldPassword}
+                            name="newPassword"
+                            value={password.newPassword}
                             onChange={passwordChangeHandler}
                         />
 

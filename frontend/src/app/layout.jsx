@@ -1,4 +1,5 @@
 import ReduxProvider from "../features/redux/provider";
+import { ToastProvider } from "./providers/ToastProvider"
 import "./globals.css";
 
 export default function RootLayout({ children }) {
@@ -6,6 +7,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body>
         <ReduxProvider>
+          <ToastProvider />
           {children}
         </ReduxProvider>
       </body>

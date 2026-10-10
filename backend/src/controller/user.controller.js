@@ -112,11 +112,11 @@ class userController {
         }
     }
 
-    async email(req, res, next) {
+    async forgetPassword(req, res, next) {
         try {
             const { email } = req.body;
 
-            const user = await this.userServices.email(email);
+            const user = await this.userServices.forgetPassword(email);
 
             res.status(200).json(user)
         } catch (error) {
@@ -129,6 +129,38 @@ class userController {
             const { email, otp } = req.body
 
             const result = await this.userServices.verifyOtp(email, otp)
+
+            res.cookie("password_reset_token", result.resetToken, {
+                httpOnly: true,
+                secure: process.env.NODE_ENV === "production",
+                sameSite:
+                    process.env.NODE_ENV === "production"
+                        ? "none"
+                        : "lax",
+            });
+
+            res.status(200).json(result)
+        } catch (error) {
+            next(error)
+        }
+    }
+
+    async updatePasswordByEmail(req, res, next) {
+        try {
+            const { newPassword } = req.body;
+            const resetToken = req.cookies.password_reset_token
+
+            res.clearCookie("password_reset_token", {
+                httpOnly: true,
+                secure: process.env.NODE_ENV === "production",
+                sameSite:
+                    process.env.NODE_ENV === "production"
+                        ? "none"
+                        : "lax",
+                maxAge: 10 * 60 * 1000,
+            })
+
+            const result = await this.userServices.updatePasswordByEmail(resetToken, newPassword)
 
             res.status(200).json(result)
         } catch (error) {

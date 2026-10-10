@@ -17,5 +17,5 @@ export const config = {
     MAIL_EMAIL: process.env.MAIL_EMAIL,
     MAIL_PASS: process.env.MAIL_PASS,
 
-    FRONT_END_URL: process.env.FRONT_END_URL
+    FRONT_END_URLS: process.env.FRONT_END_URL
 }

@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken"
 import { config } from "../config/config.js"
 import AppError from "./error.js"
+import crypto from "crypto"
 
 export const generateAccessToken = (user) => {
     const access = jwt.sign(
@@ -55,4 +56,12 @@ export const refreshTokenVerify = (token) => {
 
         throw new AppError("Invalid refresh token", 401);
     }
+}
+
+export const generateResetToken = () => {
+    return crypto.randomBytes(32).toString("hex")
+}
+
+export const hashResetToken = (token) => {
+    return crypto.createHash("sha256").update(token).digest("hex")
 }

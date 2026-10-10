@@ -17,3 +17,15 @@ export const forgetPassword = async (email) => {
         withCredentials: true
     })
 }
+
+export const verifyOtpApi = async (email, otp) => {
+    return await instance.post("/auth/otp-verify", {email, otp}, {
+        withCredentials: true
+    })
+}
+
+export const resetPassword = async (password) => {
+    return await instance.post("/auth/reset-password", password, {
+        withCredentials: true
+    })
+}

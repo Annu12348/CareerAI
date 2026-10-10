@@ -1,6 +1,6 @@
 import express from "express";
 import userController from "../controller/user.controller.js";
-import { forgetPasswordValidation, loginValidator, registerValidator, verifyOtpValidation } from "../middleware/validator/user.validator.js";
+import { forgetPasswordValidation, loginValidator, registerValidator, resetPasswordValidator, verifyOtpValidation } from "../middleware/validator/user.validator.js";
 import { errorValidator } from "../middleware/error.validator.js";
 import { forgetPasswordLimiter, verifyOtpLimiter } from "../middleware/rateLimiter.middleware.js";
 const router = express.Router();
@@ -22,16 +22,16 @@ router.post(
 )
 
 router.post(
-    "/forget-password",    
-    userControllers.email.bind(userControllers)
+    "/refresh",
+    userControllers.refresh.bind(userControllers)
 )
 
 router.post(
-    "/refresh",
+    "/forget-password",
     forgetPasswordValidation,
     errorValidator,
-    forgetPasswordLimiter,
-    userControllers.refresh.bind(userControllers)
+    forgetPasswordLimiter,    
+    userControllers.forgetPassword.bind(userControllers)
 )
 
 router.post(
@@ -40,6 +40,13 @@ router.post(
     errorValidator,
     verifyOtpLimiter,
     userControllers.otpVerify.bind(userControllers)
+)
+
+router.post(
+    "/reset-password",
+    resetPasswordValidator,
+    errorValidator,
+    userControllers.updatePasswordByEmail.bind(userControllers)
 )
 
 export default router;
