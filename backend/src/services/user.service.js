@@ -107,7 +107,7 @@ class userServices {
         )
 
         const r = await emailQueue.add(
-            "sentOtp",
+            "sendOtp",
             {
                 email,
                 otp

@@ -16,6 +16,10 @@ export const config = {
 
     MAIL_EMAIL: process.env.MAIL_EMAIL,
     MAIL_PASS: process.env.MAIL_PASS,
+    SMTP_PASS: process.env.SMTP_PASS,
+    SMTP_USER: process.env.SMTP_USER,
+    SMTP_HOST: process.env.SMTP_HOST,
+    SMTP_PORT: process.env.SMTP_PORT,
 
     FRONT_END_URLS: process.env.FRONT_END_URL
 }
