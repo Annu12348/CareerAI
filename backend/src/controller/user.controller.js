@@ -167,6 +167,36 @@ class userController {
             next(error)
         }
     }
+
+    async updateProfileImage(req, res, next) {
+        try {
+            const userId = req.id;
+
+            if (!userId) {
+                throw new AppError("Authentication required", 401);
+            }
+    
+            if (!req.file) {
+                throw new AppError("Profile image is required", 400);
+            }
+    
+            const profileImage = await this.userServices.updateProfileImage(
+                userId,
+                req.file
+            );
+
+            res.status(200).json({
+                success: true,
+                message: "Profile image updated successfully",
+                data: {
+                    profileImage,
+                }
+            })
+
+        } catch (error) {
+            next(error)
+        }
+    }
 }
 
 export default userController;

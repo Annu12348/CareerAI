@@ -51,6 +51,27 @@ class mongoUserRepository extends IUserRepository {
             throw new AppError(`Failed to updated user by email: ${error.message}`, 500, error)
         }
     }
+
+    async profileUpdate(image, userId) {
+        try {
+            const user = await userModel.findByIdAndUpdate(
+                userId,
+                {
+                    $set: {
+                        profileImage: image
+                    }
+                },
+                {
+                    new: true,
+                    runValidators: true
+                }
+            ).select("profileImage");
+
+            return user;
+        } catch (error) {
+            throw new AppError(`failed to update profile: ${error.message}`, 500)
+        }
+    }
 }
 
 export default mongoUserRepository;

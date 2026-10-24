@@ -11,6 +11,10 @@ class IUserRepository {
         throw new Error("method not implement")
     }
 
+    async profileUpdate(image, userId) {
+        throw new Error("method not implement")
+    }
+
     async resetPasswordByEmail(email, hashedPassword) {
         throw new Error("method not implement")
     }

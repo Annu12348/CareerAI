@@ -3,6 +3,8 @@ import userController from "../controller/user.controller.js";
 import { forgetPasswordValidation, loginValidator, registerValidator, resetPasswordValidator, verifyOtpValidation } from "../middleware/validator/user.validator.js";
 import { errorValidator } from "../middleware/error.validator.js";
 import { forgetPasswordLimiter, verifyOtpLimiter } from "../middleware/rateLimiter.middleware.js";
+import { authenticationUser } from "../middleware/auth.middleware.js";
+import { upload } from "../middleware/upload.middleware.js";
 const router = express.Router();
 
 const userControllers = new userController()
@@ -30,7 +32,7 @@ router.post(
     "/forget-password",
     forgetPasswordValidation,
     errorValidator,
-    forgetPasswordLimiter,    
+    forgetPasswordLimiter,
     userControllers.forgetPassword.bind(userControllers)
 )
 
@@ -47,6 +49,40 @@ router.post(
     resetPasswordValidator,
     errorValidator,
     userControllers.updatePasswordByEmail.bind(userControllers)
+)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+router.patch(
+    "/profile-image",
+    authenticationUser,
+    upload.single("image"),
+    userControllers.updateProfileImage.bind(userControllers)
 )
 
 export default router;

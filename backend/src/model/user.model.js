@@ -38,9 +38,27 @@ const userSchema = mongoose.Schema({
         default: "user",
     },
 
-    avatar: {
-        type: String,
-        default: null,
+    profileImage: {
+        url: {
+            type: String,
+            trim: true,
+            maxlength: 2048,
+            default: null,
+        },
+
+        fileId: {
+            type: String,
+            trim: true,
+            maxlength: 255,
+            default: null,
+        },
+
+        filePath: {
+            type: String,
+            trim: true,
+            maxlength: 2048,
+            default: null,
+        },
     },
 
     isVerified: {
@@ -49,6 +67,7 @@ const userSchema = mongoose.Schema({
     },
 }, {
     timestamps: true,
+    strict: "throw"
 })
 
 const userModel = mongoose.model("User", userSchema);

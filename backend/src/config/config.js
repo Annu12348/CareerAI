@@ -21,5 +21,9 @@ export const config = {
     SMTP_HOST: process.env.SMTP_HOST,
     SMTP_PORT: process.env.SMTP_PORT,
 
-    FRONT_END_URLS: process.env.FRONT_END_URL
+    FRONT_END_URLS: process.env.FRONT_END_URL,
+
+    IMAGEKIT_PUBLIC_KEY: process.env.IMAGEKIT_PUBLIC_KEY,
+    IMAGEKIT_PRIVATE_KEY: process.env.IMAGEKIT_PRIVATE_KEY,
+    IMAGEKIT_URL_ENDPOINT: process.env.IMAGEKIT_URL_ENDPOINT
 }

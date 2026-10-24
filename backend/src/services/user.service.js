@@ -5,6 +5,7 @@ import AppError from "../utils/error.js";
 import { generateAccessToken, generateRefreshToken, generateResetToken, hashResetToken, refreshTokenVerify } from "../utils/token.js";
 import redis from "../redis/redis.js";
 import { emailQueue } from "../queues/email.queue.js";
+import imageKitService from "./imagekit.service.js";
 
 const OTP_TTL = 300;
 const OTP_MAX_ATTEMPTS = 5;
@@ -249,6 +250,64 @@ class userServices {
             success: true,
             message: "Password reset successfully",
         }
+    }
+
+    async updateProfileImage(userId, file) {
+        if (!userId) {
+            throw new AppError("Authentication required", 401);
+        }
+
+        if (!file) {
+            throw new AppError("Profile image is required", 400);
+        }
+
+        const currentUser = await this.mongoUserRepository.findById(userId)
+
+        if (!currentUser) {
+            throw new AppError("User not found", 404);
+        }
+
+        const uploadedImage = await imageKitService.uploadImage(
+            file,
+            String(userId),
+            "profile"
+        )
+
+        let updatedUser;
+
+        try {
+            updatedUser = await this.mongoUserRepository.profileUpdate(
+                uploadedImage,
+                userId
+            );
+
+            if (!updatedUser) {
+                throw new AppError("User not found", 404)
+            }
+        } catch (error) {
+            try {
+                await imageKitService.deleteImage(uploadedImage.fileId)
+            } catch (cleanupError) {
+                console.error("New profile image cleanup faild", {
+                    fileId: uploadedImage.fileId
+                })
+            }
+            throw error;
+        }
+
+        const oldFileId = currentUser.profileImage?.fileId;
+
+        if (oldFileId && oldFileId !== uploadedImage.fileId) {
+            try {
+                await imageKitService.deleteImage(oldFileId)
+            } catch (error) {
+                console.error("old profile image cleanup faild", {
+                    fileId: oldFileId
+                })
+            }
+        }
+        
+        return updatedUser.profileImage;
     }
 }
 

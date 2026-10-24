@@ -21,8 +21,8 @@ app.use(
   );
 app.use(cookieParser())
 
-app.use("/api/auth", userRoutes)
-app.use("/api/resume", resumeRoutes)
+app.use("/api/v1/users", userRoutes)
+app.use("/api/v1/resumes", resumeRoutes)
 
 app.use(errorHandlingMiddleware)
 
