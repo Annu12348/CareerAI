@@ -7,11 +7,11 @@ import SocialSignup from "./SocialSignup";
 import AuthDivider from "./AuthDivider";
 import SignupFooter from "./SignupFooter";
 import useSignup from "../../../hooks/useSignup";
+import Label from "../../../../components/ui/Label";
 
 
 const SignupForm = () => {
     const { formData, error, changeHandler, submitHandler } = useSignup()
-    console.log(error)
 
     return (
         <div className="w-[74%] h-[100vh] p-7 flex items-center justify-center">
@@ -28,41 +28,57 @@ const SignupForm = () => {
                     onSubmit={submitHandler}
                     className="mt-4"
                 >
+                    <Label
+                        label="First Name"
+                        className='text-sm  tracking-tight capitalize '
+                    />
                     <Input
-                        label='First Name'
                         text="text"
                         placeholder="Enter Your First Name"
                         name="firstName"
                         value={formData.firstName}
                         onChange={changeHandler}
                         error={error.firstName}
+                        className="w-full p-3 mb-2 border rounded-md font-sans tracking-tight leading-none border-zinc-200 text-sm"
+                    />
+                    <Label
+                        label="last Name"
+                        className='text-sm  tracking-tight capitalize '
                     />
                     <Input
-                        label='last Name'
                         text="text"
                         placeholder="Enter Your lsst Name"
                         name="lastName"
                         value={formData.lastName}
                         onChange={changeHandler}
                         error={error.lastName}
+                        className="w-full p-3 mb-2 border rounded-md font-sans tracking-tight leading-none border-zinc-200 text-sm"
+                    />
+                    <Label
+                        label="email"
+                        className='text-sm  tracking-tight capitalize '
                     />
                     <Input
-                        label='email'
                         text="text"
                         placeholder="Enter Your email"
                         name="email"
                         value={formData.email}
                         onChange={changeHandler}
                         error={error.email}
+                        className="w-full p-3 mb-2 border rounded-md font-sans tracking-tight leading-none border-zinc-200 text-sm"
+                    />
+                    <Label
+                        label="password"
+                        className='text-sm  tracking-tight capitalize '
                     />
                     <Input
-                        label='password'
-                        text="password"
+                        type="password"
                         placeholder="Enter Your password"
                         name="password"
                         value={formData.password}
                         onChange={changeHandler}
                         error={error.password}
+                        className="w-full p-3  border rounded-md font-sans tracking-tight leading-none border-zinc-200 text-sm"
                     />
                     <Button text="create account" submit="submit" />
                 </form>

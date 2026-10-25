@@ -53,89 +53,6 @@ class ResumeSevices {
         return resume;
     }
 
-    /*async updateResumeProfileImage(resumeId, userId, file, title) {
-        console.log({title})
-        
-        if (!userId) {
-            throw new AppError("Authentication required", 401);
-        }
-
-        //if (!file) {
-          //  throw new AppError("Resume profile image is required", 400);
-       // }
-
-        const existingResume = await this.mongoResumeRespository.findByIdResume(
-            resumeId,
-            userId
-        )
-
-        if (!existingResume) {
-            throw new AppError("Resume not found or access denied", 404);
-        }
-
-        //const uploadedImage = await imagekitService.uploadImage(
-        //  file,
-        // String(userId),
-        // "resume"
-        //);
-
-        let updatedResume;
-
-        try {
-            //updatedResume = await this.mongoResumeRespository.resumeProfileUpadate({
-            // resumeId,
-            //userId,
-            //image: uploadedImage
-            //})
-
-            updatedResume = await this.mongoResumeRespository.resumeProfileUpadate(
-                userId,
-                resumeId,
-                //image: uploadedImage
-                title
-            )
-
-            if (!updatedResume) {
-                throw new AppError("Resume not found or access denied", 404)
-            }
-        } catch (error) {
-            // try {
-            //   await imagekitService.deleteImage(uploadedImage.fileId);
-            //} catch (cleanupError) {
-            //  console.error("New resume image cleanup failed", {
-            //    fileId: uploadedImage.fileId
-            //})
-            //}
-            //  throw error;
-        }
-
-
-
-
-
-
-
-
-
-
-
-        //const oldFileId = existingResume?.personalInfo?.profileImage?.fileId
-
-        //if (oldFileId && oldFileId !== uploadedImage.fileId) {
-        //  try {
-        //    await imagekitService.deleteImage(oldFileId);
-        //} catch (cleanupError) {
-        //  console.error("Old resume image cleanup failed", {
-        //    fileId: oldFileId,
-        //});
-        //}
-        //}
-
-        //return updatedResume.personalInfo.profileImage;
-
-        return updatedResume;
-    }*/
-
     async updateResumeProfileImage(userId, resumeId, file) {
         if (!userId) {
             throw new AppError("Authentication required", 401);
@@ -186,19 +103,6 @@ class ResumeSevices {
             }
             throw error;
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         const oldFileId = existingResume?.personalInfo?.profileImage?.fileId
 

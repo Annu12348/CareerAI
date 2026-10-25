@@ -1,13 +1,10 @@
 import React from 'react'
 
-const Input = ({ label, type, placeholder, value, onChange, name, error }) => {
+const Input = ({ type, placeholder, value, onChange, name, error, className }) => {
   return (
-    <div className='w-full mt-1'>
-      <label className='text-sm tracking-tight capitalize '>
-        {label} *
-      </label>
+    <div className='w-full'>
       <input
-        className='w-full p-3  border rounded-md font-sans tracking-tight leading-none border-zinc-200 text-sm '
+        className={className}
         type={type}
         placeholder={placeholder}
         name={name}

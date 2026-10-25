@@ -22,41 +22,6 @@ class ResumeController {
         }
     }
 
-    /*async updateResumeProfileImage(req, res, next) {
-        try {
-            const userId = req.id;
-            const { resumeId } = req.params;
-            const { title } = req.body
-
-            if (!userId) {
-                throw new AppError("Authentication required", 401);
-            }
-
-            //if (!req.file) {
-              //  throw new AppError("Profile image is required", 400);
-           // }
-
-            const profileImage = await this.ResumeService.updateResumeProfileImage(
-                resumeId,
-                userId,
-                title
-                //req.file
-            );
-            
-
-            res.status(200).json({
-                success: true,
-                message: "Resume profile image updated successfully",
-                data: {
-                  profileImage,
-                }
-            })
-
-        } catch (error) {
-            next(error)
-        }
-    }*/
-
     async updateResumeProfileImage(req, res, next) {
         try {
             const userId = req.id

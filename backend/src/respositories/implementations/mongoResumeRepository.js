@@ -35,36 +35,6 @@ class mongoResumeRepository extends IResumeRepository {
         }
     }
 
-    /*async resumeProfileUpadate(image, userId, resumeId) {
-        try {
-            console.log(userId)
-            //if (!mongoose.isValidObjectId(resumeId)) {
-              //  return null
-            //}
-
-            //const resume = await resumeModel.findOneAndUpdate(
-              //  {
-                //    _id: resumeId,
-                  //  userId,
-                    //deletedAt: null
-                //},
-                //{
-                  //  $set: {
-                    //    "personalInfo.profileImage": image
-                    //}
-                //},
-                //{
-                //    new: true,
-                 //   runValidators: true
-                //}
-            //).select("personalInfo.profileImage")
-            console.log(resumeId)
-            return "jjj";
-        } catch (error) {
-            throw new AppError(`failed to update resume: ${error.message}`, 500)
-        }
-    }*/
-
     async resumeProfileUpadate(userId, resumeId, image) {
         try {
             if (

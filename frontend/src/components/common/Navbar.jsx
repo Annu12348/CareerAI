@@ -3,9 +3,11 @@
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
+import Input from "../ui/Input"
 
 const Navbar = () => {
     const { user } = useSelector(store => store.Auth)
+    const profileImage = user?.profileImage?.url || "No Image"
     const [mounted, setMounted] = useState(false)
     const userId = user?._id ?? user?.id;
 
@@ -15,30 +17,14 @@ const Navbar = () => {
 
 
     return (
-        <div className='bg-zinc-600 p-3 w-full flex items-center justify-between'>
-            <Link
-                href='/'
-            >
-                Home
-            </Link>
+        <div className='bg-white shadow py-1 px-3 w-full flex items-center justify-between'>
+            <Input
+            type='search'
+            placeholder='Search job, skill or anything..'
+            name='search'
+            className='border-2 bg-zinc-100 text-sm outline-none px-2 py-1.5 rounded-lg w-[40%] tracking-tight leading-none  text-black border-zinc-200 '
+             />
             <div className='flex items-center gap-2'>
-                <button
-                    className=' text-sm text-red-500 cursor-pointer rounded capitalize font-sans font-semibold tracking-tight leading-none'
-                >
-                    logout
-                </button>
-                <Link
-                    className='bg-blue-500 hover:bg-blue-400 py-3 px-6 rounded capitalize font-sans font-semibold tracking-tight leading-none'
-                    href='/auth/login'
-                >
-                    login
-                </Link>
-                <Link
-                    className='bg-blue-500 hover:bg-blue-400 py-3 px-6 rounded capitalize font-sans font-semibold tracking-tight leading-none'
-                    href='/auth/signup'
-                >
-                    signup
-                </Link>
                 {mounted && userId ? (
                     <Link
                         className='bg-blue-500 overflow-hidden hover:bg-blue-400 w-11 h-11 rounded-full capitalize font-sans font-semibold tracking-tight leading-none'
@@ -46,7 +32,7 @@ const Navbar = () => {
                     >
                         <img
                             className='w-full h-full object-cover  '
-                            src="https://plus.unsplash.com/premium_photo-1672239496290-5061cfee7ebb?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D"
+                            src={profileImage}
                         />
                     </Link>
                 ) : (

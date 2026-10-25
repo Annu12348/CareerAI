@@ -9,6 +9,7 @@ import SignupFooter from '../signup/SignupFooter'
 import SignupHeader from '../signup/SignupHeader'
 import useLogin from '../../../hooks/useLogin'
 import Link from 'next/link';
+import Label from '../../../../components/ui/Label';
 
 const LoginForm = () => {
     const { error, loading, formData, changeHandler, submitHandler } = useLogin()
@@ -28,29 +29,36 @@ const LoginForm = () => {
                     onSubmit={submitHandler}
                     className="mt-4"
                 >
-
-                    <Input
+                    <Label
                         label="email"
+                        className='text-sm tracking-tight capitalize '
+                    />
+                    <Input
                         type="email"
                         placeholder="Enter Your Email"
                         name="email"
                         value={formData.email}
                         onChange={changeHandler}
                         error={error.email}
+                        className="w-full p-3 mb-2  border rounded-md font-sans tracking-tight leading-none border-zinc-200 text-sm"
                     />
 
-                    <Input
+                    <Label
                         label="password"
+                        className='text-sm  tracking-tight capitalize '
+                    />
+                    <Input
                         type="password"
                         placeholder="Enter Your Password"
                         name='password'
                         value={formData.password}
                         onChange={changeHandler}
                         error={error.password}
+                        className="w-full p-3  border rounded-md font-sans tracking-tight leading-none border-zinc-200 text-sm"
                     />
-                    <Link 
-                    href="/auth/forget-password"
-                    className='text-red-500 capitalize tracking-tight leading-none w-full flex mt-5 items-center justify-end '
+                    <Link
+                        href="/auth/forget-password"
+                        className='text-red-500 capitalize tracking-tight leading-none w-full flex mt-5 items-center justify-end '
                     >
                         forget password
                     </Link>

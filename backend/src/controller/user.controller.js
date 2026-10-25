@@ -75,7 +75,8 @@ class userController {
                     avatar: result.user.avatar,
                     isVerified: result.user.isVerified,
                     createdAt: result.user.createdAt,
-                    updatedAt: result.user.updatedAt
+                    updatedAt: result.user.updatedAt,
+                    profileImage: result.user.profileImage
                 },
             })
         } catch (error) {

@@ -6,6 +6,7 @@ import { FaArrowLeft } from "react-icons/fa";
 import Input from '../../../../components/ui/Input';
 import Button from '../../../../components/ui/Button';
 import useForgetPassword from '../../../hooks/useForgetPassword';
+import Label from '../../../../components/ui/Label';
 
 const ForgetPassword = () => {
     const {
@@ -43,13 +44,17 @@ const ForgetPassword = () => {
                         className='mt-4 text-black'
                         onSubmit={submitHandler1}
                     >
-                        <Input
+                        <Label
                             label="email"
+                            className='text-sm  tracking-tight capitalize '
+                        />
+                        <Input
                             placeholder="Enter your email..."
                             type="email"
                             name="email"
                             value={email}
                             onChange={emailChangeHandler}
+                            className="w-full p-3 border rounded-md font-sans tracking-tight leading-none border-zinc-200 text-sm"
                         />
                         <Button type="submit" text="sent otp" />
                     </form>
@@ -59,13 +64,17 @@ const ForgetPassword = () => {
                         className='mt-4 text-black'
                         onSubmit={submitHandler2}
                     >
+                        <Label
+                            label="otp"
+                            className='text-sm  tracking-tight capitalize '
+                        />
                         <Input
-                            label="OTP"
                             placeholder="Enter your otp..."
                             type="text"
                             name="otp"
                             value={otp}
                             onChange={otpChangeHandler}
+                            className="w-full p-3 border rounded-md font-sans tracking-tight leading-none border-zinc-200 text-sm"
                         />
                         <Button type="submit" text="verify otp" />
                     </form>
@@ -75,15 +84,22 @@ const ForgetPassword = () => {
                         className='mt-4 text-black'
                         onSubmit={submitHandler3}
                     >
-                        <Input
+                        <Label
                             label="new password"
+                            className='text-sm  tracking-tight capitalize '
+                        />
+                        <Input
                             placeholder="Enter your new password..."
                             type="password"
                             name="newPassword"
                             value={password.newPassword}
                             onChange={passwordChangeHandler}
+                            className="w-full p-3 mb-2 border rounded-md font-sans tracking-tight leading-none border-zinc-200 text-sm"
                         />
-
+                        <Label
+                            label="comfirm password"
+                            className='text-sm  tracking-tight capitalize '
+                        />
                         <Input
                             label="comfirm password"
                             placeholder="Enter your comfirm password..."
@@ -91,6 +107,7 @@ const ForgetPassword = () => {
                             name="confirmPassword"
                             value={password.confirmPassword}
                             onChange={passwordChangeHandler}
+                            className="w-full p-3 border rounded-md font-sans tracking-tight leading-none border-zinc-200 text-sm"
                         />
                         <Button type="submit" text="change" />
                     </form>

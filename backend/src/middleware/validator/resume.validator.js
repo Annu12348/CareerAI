@@ -1,4 +1,4 @@
-import { body } from "express-validator";
+import { body, param } from "express-validator";
 
 export const createResumeValidator = [
     body("title")
@@ -359,4 +359,14 @@ export const createResumeValidator = [
         .optional()
         .isIn(["private", "public"])
         .withMessage("Invalid resume visibility"),
+]
+
+export const validationResumeProfileImage = [
+    param("resumeId") 
+    .trim()
+    .notEmpty()
+    .withMessage("Resume ID is required")
+    .bail()
+    .isMongoId()
+    .withMessage("Invalid resume ID")
 ]
