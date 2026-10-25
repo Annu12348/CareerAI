@@ -62,7 +62,11 @@ const LoginForm = () => {
                     >
                         forget password
                     </Link>
-                    <Button text="login" submit="submit" />
+                    <Button
+                        text="login"
+                        submit="submit"
+                        className='mt-4 bg-blue-500 w-full p-3 capitalize rounded-md cursor-pointer hover:bg-blue-600 mb-2 text-white font-semibold '
+                    />
                 </form>
                 <SignupFooter />
             </div>

@@ -80,7 +80,11 @@ const SignupForm = () => {
                         error={error.password}
                         className="w-full p-3  border rounded-md font-sans tracking-tight leading-none border-zinc-200 text-sm"
                     />
-                    <Button text="create account" submit="submit" />
+                    <Button 
+                    text="create account" 
+                    submit="submit"
+                    className='mt-4 bg-blue-500 w-full p-3 capitalize rounded-md cursor-pointer hover:bg-blue-600 mb-2 text-white font-semibold '
+                    />
                 </form>
                 <SignupFooter />
             </div>

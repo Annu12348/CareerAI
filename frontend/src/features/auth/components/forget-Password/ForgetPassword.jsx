@@ -56,7 +56,11 @@ const ForgetPassword = () => {
                             onChange={emailChangeHandler}
                             className="w-full p-3 border rounded-md font-sans tracking-tight leading-none border-zinc-200 text-sm"
                         />
-                        <Button type="submit" text="sent otp" />
+                        <Button
+                            type="submit"
+                            text="sent otp"
+                            className='mt-4 bg-blue-500 w-full p-3 capitalize rounded-md cursor-pointer hover:bg-blue-600 mb-2 text-white font-semibold '
+                        />
                     </form>
                 )}
                 {page == 2 && (
@@ -76,7 +80,11 @@ const ForgetPassword = () => {
                             onChange={otpChangeHandler}
                             className="w-full p-3 border rounded-md font-sans tracking-tight leading-none border-zinc-200 text-sm"
                         />
-                        <Button type="submit" text="verify otp" />
+                        <Button
+                            type="submit"
+                            text="verify otp"
+                            className='mt-4 bg-blue-500 w-full p-3 capitalize rounded-md cursor-pointer hover:bg-blue-600 mb-2 text-white font-semibold '
+                        />
                     </form>
                 )}
                 {page == 3 && (
@@ -109,7 +117,11 @@ const ForgetPassword = () => {
                             onChange={passwordChangeHandler}
                             className="w-full p-3 border rounded-md font-sans tracking-tight leading-none border-zinc-200 text-sm"
                         />
-                        <Button type="submit" text="change" />
+                        <Button
+                            type="submit"
+                            text="change"
+                            className='mt-4 bg-blue-500 w-full p-3 capitalize rounded-md cursor-pointer hover:bg-blue-600 mb-2 text-white font-semibold '
+                        />
                     </form>
                 )}
             </div>
