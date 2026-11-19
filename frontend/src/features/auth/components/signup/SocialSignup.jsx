@@ -1,11 +1,14 @@
 import React from 'react'
 import { FaGithub } from 'react-icons/fa6'
 import { FcGoogle } from 'react-icons/fc'
+import useGoogleAuth from '../../../hooks/useGoogleAuth';
 
 const SocialSignup = () => {
+    const handleGoogleLogin = useGoogleAuth();
     return (
         <div className="flex items-center mt-5 justify-center gap-10">
             <button
+                onClick={handleGoogleLogin}
                 type="button"
                 className="p-2 border flex font-bold rounded-lg border-zinc-300 w-[47%] justify-center items-center gap-5"
             >

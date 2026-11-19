@@ -1,5 +1,21 @@
 import mongoose from "mongoose";
 
+const authProviderSchema = new mongoose.Schema({
+    provider: {
+        type: String,
+        enum: ["local", "google", "github"],
+        required: true,
+    },
+
+    providerId: {
+        type: String,
+        required: true,
+        trim: true,
+    },
+}, {
+    _id: false
+})
+
 const userSchema = mongoose.Schema({
     firstName: {
         type: String,
@@ -27,9 +43,27 @@ const userSchema = mongoose.Schema({
 
     password: {
         type: String,
-        required: true,
+        required: function () {
+            return this.authProviders?.some(
+                (item) => item.provider === "local"
+            )
+        },
         minlength: 8,
-        //select: false,
+        select: false,
+    },
+
+    authProviders: {
+        type: [authProviderSchema],
+        default: [],
+        validate: {
+            validator: function (providers) {
+                const names = providers.map(
+                    (item) => item.provider
+                )
+                return names.length === new Set(names).size
+            },
+            message: "Duplicate authentication providers are not allowed.",
+        }
     },
 
     role: {
@@ -70,5 +104,26 @@ const userSchema = mongoose.Schema({
     strict: "throw"
 })
 
+userSchema.index(
+    {
+        email: 1
+    },
+
+    {
+        unique: true
+    }
+)
+
+userSchema.index(
+    {
+        "authProviders.provider": 1,
+        "authProviders.providerId": 1,
+    },
+    {
+        unique: true
+    }
+)
+
 const userModel = mongoose.model("User", userSchema);
+
 export default userModel;

@@ -1,6 +1,26 @@
 import userServices from "../services/user.service.js";
 import AppError from "../utils/error.js";
 
+const accessCookieOptions = {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite:
+        process.env.NODE_ENV === "production"
+            ? "none"
+            : "lax",
+    maxAge: 15 * 60 * 1000,
+}
+
+const refreshCookieOptions = {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite:
+        process.env.NODE_ENV === "production"
+            ? "none"
+            : "lax",
+    maxAge: 7 * 24 * 60 * 60 * 1000
+};
+
 class userController {
     constructor() {
         this.userServices = new userServices()
@@ -176,11 +196,11 @@ class userController {
             if (!userId) {
                 throw new AppError("Authentication required", 401);
             }
-    
+
             if (!req.file) {
                 throw new AppError("Profile image is required", 400);
             }
-    
+
             const profileImage = await this.userServices.updateProfileImage(
                 userId,
                 req.file
@@ -197,7 +217,7 @@ class userController {
         } catch (error) {
             next(error)
         }
-    }
+    }  
 }
 
 export default userController;

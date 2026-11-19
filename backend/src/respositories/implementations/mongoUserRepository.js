@@ -72,6 +72,75 @@ class mongoUserRepository extends IUserRepository {
             throw new AppError(`failed to update profile: ${error.message}`, 500)
         }
     }
+
+    async findByGoogleId(googleId) {
+        try {
+            const user = await userModel.findOne({
+                authProviders: {
+                    $elemMatch: {
+                        provider: "google",
+                        providerId: googleId,
+                    }
+                }
+            })
+
+            return user;
+        } catch (error) {
+            throw new AppError(`Failed to find user by Google ID: ${error.message}`, 500, error)
+        }
+    }
+
+    async linkGoogleAccount(userId, googleId) {
+        try {
+            const user = await userModel.findOneAndUpdate(
+                {
+                    _id: userId,
+                    authProviders: {
+                        $not: {
+                            $elemMatch: {
+                                provider: "google"
+                            }
+                        },
+                    }
+                },
+                {
+                    $addToSet: {
+                        authProviders: {
+                            provider: "google",
+                            providerId: googleId,
+                        },
+                    }
+                },
+                {
+                    new: true,
+                    runValidators: true
+                }
+            )
+
+            return user;
+        } catch (error) {
+            throw new AppError(`Failed to find user by Google ID: ${error.message}`, 500, error)
+        }
+    }
+
+    async hasGoogleAccount(userId) {
+        try {
+            const user = await userModel.exists(
+                {
+                    _id: userId,
+                    authProviders: {
+                        $elemMatch: {
+                            provider: "google",
+                        },
+                    },
+                }
+            )
+
+            return user;
+        } catch (error) {
+            throw new AppError(`Failed to check Google account: ${error.message}`, 500, error)
+        }
+    }
 }
 
 export default mongoUserRepository;

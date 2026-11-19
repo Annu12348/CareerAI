@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import { forgetPassword, resetPassword, verifyOtpApi } from '../services/auth.service';
 import { useRouter } from 'next/navigation';
 import { toast } from "react-toastify";
+import { validationForgotPassword, validationResetPassword, validationVerifyOTP } from '../validator/auth.validator';
 
 const useForgetPassword = () => {
     const [page, setPage] = useState(1)
@@ -15,6 +16,7 @@ const useForgetPassword = () => {
         newPassword: "",
         confirmPassword: ""
     })
+    console.log("password", password)
 
     const forgetPasswordApi = async () => {
         try {
@@ -95,16 +97,52 @@ const useForgetPassword = () => {
 
     const submitHandler1 = (e) => {
         e.preventDefault()
+
+        if (loading) return;
+
+        const validationError = validationForgotPassword(email)
+
+        if (Object.keys(validationError).length > 0) {
+            setError(validationError);
+            return;
+        }
+
+        setError({})
+
         forgetPasswordApi()
     }
 
     const submitHandler2 = (e) => {
         e.preventDefault();
+
+        if (loading) return;
+
+        const validationError = validationVerifyOTP(otp);
+
+        if (Object.keys(validationError).length > 0) {
+            setError(validationError);
+            return;
+        }
+
+        setError({})
+
         verifyotpdApi()
     }
 
     const submitHandler3 = (e) => {
         e.preventDefault();
+
+        if (loading) return;
+
+        const validationError = validationResetPassword(password)
+
+        if (Object.keys(validationError).length > 0) {
+            setError(validationError);
+            return;
+        }
+
+        setError({})
+
         resetPasswordApi()
     }
     return {

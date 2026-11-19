@@ -18,6 +18,14 @@ class IUserRepository {
     async resetPasswordByEmail(email, hashedPassword) {
         throw new Error("method not implement")
     }
+
+    async findByGoogleId(googleId) {
+        throw new Error("method not implement")
+    }
+
+    async linkGoogleAccount(userId, googleId) {
+        throw new Error("method not implement")
+    }
 } 
 
 export default IUserRepository;

@@ -22,8 +22,11 @@ const ForgetPassword = () => {
         otpChangeHandler,
         passwordChangeHandler,
 
-        page
+        page,
+        error
     } = useForgetPassword();
+
+    console.log(error)
 
     return (
         <div className="w-[74%] h-screen p-7 flex items-center justify-center">

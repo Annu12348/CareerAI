@@ -29,3 +29,9 @@ export const resetPassword = async (password) => {
         withCredentials: true
     })
 }
+
+export const getGoogleAuthUrl = async () => {
+    return await instance.get("/users/google", {
+        withCredentials: true
+    })
+}

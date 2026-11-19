@@ -1,23 +1,10 @@
-
 "use client";
 
-import {
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import {
-  FiSearch,
-  FiBell,
-  FiChevronDown,
-  FiUser,
-  FiSettings,
-  FiLogOut,
-  FiCheck,
-} from "react-icons/fi";
+import { FiSearch, FiBell, FiChevronDown, FiUser, FiSettings, FiLogOut, FiCheck } from "react-icons/fi";
+import { useSelector } from "react-redux";
 
 const DEFAULT_NOTIFICATIONS = [
   {
@@ -56,17 +43,10 @@ function getInitials(name = "") {
     .join("") || "U";
 }
 
-export default function TopNavbar({
-  user = null,
-  notifications = DEFAULT_NOTIFICATIONS,
-  unreadCount,
-  onLogout,
-  onNotificationClick,
-  onMarkAllRead,
-  onSearch,
-}) {
+const TopNavbar = ({ notifications = DEFAULT_NOTIFICATIONS, unreadCount, onLogout, onNotificationClick, onMarkAllRead, onSearch }) => {
   const router = useRouter();
-
+  const { user } = useSelector((state) => state.Auth);
+  console.log(user.firstName);
   const [search, setSearch] = useState("");
   const [profileOpen, setProfileOpen] = useState(false);
   const [notificationsOpen, setNotificationsOpen] = useState(false);
@@ -316,11 +296,10 @@ export default function TopNavbar({
                         className="flex w-full gap-3 border-b border-slate-100 px-4 py-3 text-left transition last:border-b-0 hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-indigo-500"
                       >
                         <span
-                          className={`mt-1.5 h-2 w-2 shrink-0 rounded-full ${
-                            notification.unread
+                          className={`mt-1.5 h-2 w-2 shrink-0 rounded-full ${notification.unread
                               ? "bg-indigo-500"
                               : "bg-transparent"
-                          }`}
+                            }`}
                         />
 
                         <span className="min-w-0 flex-1">
@@ -390,9 +369,8 @@ export default function TopNavbar({
 
               <FiChevronDown
                 aria-hidden="true"
-                className={`hidden shrink-0 text-slate-400 transition-transform sm:block ${
-                  profileOpen ? "rotate-180" : ""
-                }`}
+                className={`hidden shrink-0 text-slate-400 transition-transform sm:block ${profileOpen ? "rotate-180" : ""
+                  }`}
               />
             </button>
 
@@ -452,3 +430,5 @@ export default function TopNavbar({
     </header>
   );
 }
+
+export default TopNavbar;

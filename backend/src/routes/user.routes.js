@@ -5,9 +5,11 @@ import { errorValidator } from "../middleware/error.validator.js";
 import { forgetPasswordLimiter, verifyOtpLimiter } from "../middleware/rateLimiter.middleware.js";
 import { authenticationUser } from "../middleware/auth.middleware.js";
 import { upload } from "../middleware/upload.middleware.js";
+import GoogleController from "../controller/google.controller.js";
 const router = express.Router();
 
 const userControllers = new userController()
+const GoogleControllers = new GoogleController()
 
 router.post(
     "/register",
@@ -57,5 +59,8 @@ router.patch(
     upload.single("image"),
     userControllers.updateProfileImage.bind(userControllers)
 )
+
+router.get("/google", GoogleControllers.googleAuth.bind(GoogleControllers))
+router.get("/google/callback", GoogleControllers.googleCallback.bind(GoogleControllers))
 
 export default router;
