@@ -60,7 +60,19 @@ router.patch(
     userControllers.updateProfileImage.bind(userControllers)
 )
 
-router.get("/google", GoogleControllers.googleAuth.bind(GoogleControllers))
-router.get("/google/callback", GoogleControllers.googleCallback.bind(GoogleControllers))
+router.get(
+    "/google/signup",
+    GoogleControllers.googleSignupInit.bind(GoogleControllers)
+)
+
+router.get(
+    "/google/login",
+    GoogleControllers.googleLoginInit.bind(GoogleControllers)
+)
+
+router.get(
+    "/google/callback",
+    GoogleControllers.googleCallback.bind(GoogleControllers)
+)
 
 export default router;

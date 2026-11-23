@@ -10,9 +10,12 @@ import SignupHeader from '../signup/SignupHeader'
 import useLogin from '../../../hooks/useLogin'
 import Link from 'next/link';
 import Label from '../../../../components/ui/Label';
+import useGoogleLogin from '../../../hooks/useGoogleLogin';
 
 const LoginForm = () => {
     const { error, loading, formData, changeHandler, submitHandler } = useLogin()
+    const handleGoogleLogin = useGoogleLogin();
+
     return (
         <div className="w-[74%] h-[100vh] p-7 flex items-center justify-center">
             <div className="w-[78%] border-2 border-zinc-100 py-3 px-5 shadow text-black rounded-lg">
@@ -23,7 +26,10 @@ const LoginForm = () => {
                     link="/auth/signup"
                 />
 
-                <SocialSignup />
+                <SocialSignup
+                    text="Sign in with Google"
+                    onClick={handleGoogleLogin}
+                />
                 <AuthDivider />
                 <form
                     onSubmit={submitHandler}

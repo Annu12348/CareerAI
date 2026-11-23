@@ -30,8 +30,14 @@ export const resetPassword = async (password) => {
     })
 }
 
-export const getGoogleAuthUrl = async () => {
-    return await instance.get("/users/google", {
+export const getGoogleSignupUrl = async () => {
+    return await instance.get("/users/google/signup", {
+        withCredentials: true
+    })
+}
+
+export const getGoogleLoginUrl = async () => {
+    return await instance.get("/users/google/login", {
         withCredentials: true
     })
 }

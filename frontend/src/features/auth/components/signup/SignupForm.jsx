@@ -8,9 +8,11 @@ import AuthDivider from "./AuthDivider";
 import SignupFooter from "./SignupFooter";
 import useSignup from "../../../hooks/useSignup";
 import Label from "../../../../components/ui/Label";
+import useGoogleSignup from "../../../hooks/useGoogleSignup";
 const SignupForm = () => {
  const { formData, error, changeHandler, submitHandler, loading } = useSignup()
- console.log(loading)
+ const handleGoogleSignup = useGoogleSignup()
+
  return (
   <div className="w-[74%] h-[100vh] p-7 flex items-center justify-center">
    <div className="w-[78%] border-2 border-zinc-100 py-3 px-5 shadow text-black rounded-lg">
@@ -20,7 +22,10 @@ const SignupForm = () => {
      text="Sign in"
      link="/auth/login"
     />
-    <SocialSignup />
+    <SocialSignup
+    text="Sign up with Google"
+    onClick={handleGoogleSignup}
+     />
     <AuthDivider />
     <form
      onSubmit={submitHandler}

@@ -162,6 +162,32 @@ class GoogleServices {
         }
     }
 
+    async handleGoogleAuthWithMode(googleUser, authMode) {
+        const existingUser = await this.mongoUserRepository.findByEmail(googleUser.email);
+
+        if (authMode === "signup" && existingUser) {
+            return {
+                status: "REDIRECT_TO_LOGIN",
+                message: "Email already exists. Please login."
+            }
+        }
+
+        if (authMode === "login" && !existingUser) {
+            return {
+                status: "REDIRECT_TO_SIGNUP",
+                message: "Account not found. Please sign up."
+            };
+        }
+
+        const userResult = await this.findOrCreateUser(googleUser);
+        const user = userResult.user || userResult.existingUser;
+
+        return {
+            status: "SUCCESS",
+            user
+        };
+    }
+
     async linkGoogleAccount(userId, googleUser) {
         if (!userId || !googleUser?.googleId) {
             throw new AppError("User ID and Google ID are required", 400);

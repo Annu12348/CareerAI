@@ -31,5 +31,9 @@ export const config = {
     GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
     GOOGLE_CALLBACK_URL: process.env.GOOGLE_CALLBACK_URL,
 
-    NODE_ENV: process.env.NODE_ENV || "development"
+    NODE_ENV: process.env.NODE_ENV || "development",
+
+    GITHUB_CLIENT_ID: process.envGITHUB_CLIENT_ID,
+    GITHUB_CLIENT_SECRET: process.env.GITHUB_CLIENT_SECRET,
+    GITHUB_CALLBACK_URL: process.env.GITHUB_CALLBACK_URL
 }

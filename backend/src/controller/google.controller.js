@@ -12,7 +12,7 @@ class GoogleController {
         this.GooglrService = new GoogleServices()
     }
 
-    async googleAuth(req, res, next) {
+    async googleLoginInit(req, res, next) {
         try {
             const state = await this.GooglrService.generateState()
 
@@ -20,6 +20,38 @@ class GoogleController {
                 googleConfig.stateCookieName,
                 state,
                 googleConfig.stateCookieOptions,
+            );
+
+            res.cookie(
+                "google_auth_mode",
+                "login",
+                googleConfig.stateCookieOptions
+            )
+
+            const authUrl = await this.GooglrService.generateAuthUrl(state)
+
+            res.status(200).json({
+                data: authUrl
+            })
+        } catch (error) {
+            next(error)
+        }
+    }
+
+    async googleSignupInit(req, res, next) {
+        try {
+            const state = await this.GooglrService.generateState();
+
+            res.cookie(
+                googleConfig.stateCookieName,
+                state,
+                googleConfig.stateCookieOptions
+            )
+
+            res.cookie(
+                "google_auth_mode",
+                "signup",
+                googleConfig.stateCookieOptions
             );
 
             const authUrl = await this.GooglrService.generateAuthUrl(state)
@@ -37,19 +69,23 @@ class GoogleController {
             const { code, state, error } = req.query;
 
             console.log("CALLBACK QUERY:", req.query);
-
             console.log("CALLBACK COOKIES:", req.cookies);
-
-            console.log("STATE COOKIE NAME:", googleConfig.stateCookieName);
 
             const savedState = req.cookies?.[
                 googleConfig.stateCookieName
             ]
 
+            const authMode = req.cookies?.google_auth_mode || "login";
+
             res.clearCookie(
                 googleConfig.stateCookieName,
                 googleConfig.stateCookieOptions
             )
+
+            res.clearCookie(
+                "google_auth_mode", 
+                googleConfig.stateCookieOptions
+            );
 
             if (error) {
                 return res.redirect(
@@ -87,8 +123,23 @@ class GoogleController {
                 )
             }
 
-            const googleUser = await this.GooglrService.verifyGoogleUser(code)
-            const user = await this.GooglrService.findOrCreateUser(googleUser)
+            const googleUser = await this.GooglrService.verifyGoogleUser(code);
+
+            const authResult = await this.GooglrService.handleGoogleAuthWithMode(googleUser, authMode);
+
+            if (authResult.status === "REDIRECT_TO_LOGIN") {
+                return res.redirect("http://localhost:3000/auth/login?error=email_already_exists");
+            }
+
+            if (authResult.status === "REDIRECT_TO_SIGNUP") {
+                return res.redirect("http://localhost:3000/auth/signup?error=account_not_found");
+            }
+
+            const user = authResult.user;
+
+            if (!user) {
+                return res.redirect("http://localhost:3000/auth/login?error=authentication_failed");
+            }
 
             //wrong with import
             const accessToken = generateAccessToken(user);

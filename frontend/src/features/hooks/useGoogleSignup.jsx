@@ -1,12 +1,12 @@
 "use client"
 
 import React from 'react'
-import { getGoogleAuthUrl } from '../services/auth.service';
+import { getGoogleSignupUrl } from '../services/auth.service';
 
-const useGoogleAuth = () => {
+const useGoogleSignup = () => {
     const handleGoogleLogin = async () => {
         try {
-            const res = await getGoogleAuthUrl();
+            const res = await getGoogleSignupUrl();
             const authUrl = res.data.data;
             console.log(authUrl)
 
@@ -18,4 +18,4 @@ const useGoogleAuth = () => {
     return handleGoogleLogin
 }
 
-export default useGoogleAuth
+export default useGoogleSignup
