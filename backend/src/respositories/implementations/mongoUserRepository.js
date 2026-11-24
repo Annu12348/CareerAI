@@ -141,6 +141,73 @@ class mongoUserRepository extends IUserRepository {
             throw new AppError(`Failed to check Google account: ${error.message}`, 500, error)
         }
     }
+
+    async findByGithubId(githubId) {
+        try {
+            const user = await userModel.findOne({
+                authProviders: {
+                    $elemMatch: {
+                        provider: "github",
+                        providerId: githubId,
+                    }
+                }
+            })
+
+            return user;
+        } catch (error) {
+            throw new AppError(`Failed to find user by GitHub ID: ${error.message}`, 500, error)
+        }
+    }
+
+    async linkGithubAccount(userId, githubId) {
+        try {
+            const user = await userModel.findOneAndUpdate(
+                {
+                    _id: userId,
+                    authProviders: {
+                        $not: {
+                            $elemMatch: {
+                                provider: "github"
+                            }
+                        }
+                    }
+                },
+                {
+                    $addToSet: {
+                        authProviders: {
+                            provider: "github",
+                            providerId: githubId
+                        }
+                    }
+                },
+                {
+                    new: true,
+                    runValidators: true
+                }
+            )
+
+            return user;
+        } catch (error) {
+            throw new AppError(`Failed to link GitHub account: ${error.message}`, 500, error)
+        }
+    }
+
+    async hasGithubAccount(userId) {
+        try {
+            const user = await userModel.exists({
+                _id: userId,
+                authProviders: {
+                    $elemMatch: {
+                        provider: "github"
+                    }
+                }
+            })
+
+            return user;
+        } catch (error) {
+            throw new AppError(`Failed to check GitHub account: ${error.message}`, 500, error)
+        }
+    }
 }
 
 export default mongoUserRepository;

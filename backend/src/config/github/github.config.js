@@ -1,4 +1,5 @@
-import { config } from "../config";
+import { config } from "../config.js";
+import { oauthStateCookieOptions } from "../cookie/cookie.config.js";
 
 export const githubConfig = {
     clientId: config.GITHUB_CLIENT_ID,
@@ -13,4 +14,7 @@ export const githubConfig = {
 
     // 3. Required Scopes (User ki profile aur verified email access karne ke liye)
     scopes: ["user:email"],
+    stateCookieOptions: oauthStateCookieOptions, // 👈 Centralized options used here!
 }
+
+export default githubConfig;
