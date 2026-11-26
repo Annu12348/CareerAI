@@ -93,6 +93,11 @@ class GithubService {
             throw new AppError("No verified email found on your GitHub account", 403);
         }
 
+        const fullName = githubUserData.name || githubUserData.login || "GitHub User";
+        const nameParts = fullName.trim().split(" ");
+        const firstName = nameParts[0] || "GitHub";
+        const lastName = nameParts.slice(1).join(" ") || "User";
+
         return {
             githubId: githubUserData.id.toString(),
             email: primaryEmailObj.email.trim().toLowerCase(),

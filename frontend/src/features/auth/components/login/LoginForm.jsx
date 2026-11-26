@@ -11,10 +11,12 @@ import useLogin from '../../../hooks/useLogin'
 import Link from 'next/link';
 import Label from '../../../../components/ui/Label';
 import useGoogleLogin from '../../../hooks/useGoogleLogin';
+import useGithubLogin from '../../../hooks/useGithubLogin';
 
 const LoginForm = () => {
     const { error, loading, formData, changeHandler, submitHandler } = useLogin()
     const handleGoogleLogin = useGoogleLogin();
+    const handleGithubLogin = useGithubLogin();
 
     return (
         <div className="w-[74%] h-[100vh] p-7 flex items-center justify-center">
@@ -28,7 +30,8 @@ const LoginForm = () => {
 
                 <SocialSignup
                     text="Sign in with Google"
-                    onClick={handleGoogleLogin}
+                    google={handleGoogleLogin}
+                    github={handleGithubLogin}
                 />
                 <AuthDivider />
                 <form

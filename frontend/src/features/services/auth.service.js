@@ -41,3 +41,15 @@ export const getGoogleLoginUrl = async () => {
         withCredentials: true
     })
 }
+
+export const getGithubSignupUrl = async () => {
+    return await instance.get("/users/github/signup", {
+        withCredentials: true
+    })
+}
+
+export const getGithubLoginUrl = async () => {
+    return await instance.get("/users/github/login", {
+        withCredentials: true
+    })
+}

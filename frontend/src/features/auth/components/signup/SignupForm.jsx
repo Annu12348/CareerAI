@@ -9,9 +9,11 @@ import SignupFooter from "./SignupFooter";
 import useSignup from "../../../hooks/useSignup";
 import Label from "../../../../components/ui/Label";
 import useGoogleSignup from "../../../hooks/useGoogleSignup";
+import useGithubSignup from "../../../hooks/useGithubSignup";
 const SignupForm = () => {
  const { formData, error, changeHandler, submitHandler, loading } = useSignup()
  const handleGoogleSignup = useGoogleSignup()
+ const handleGithubSignup = useGithubSignup()
 
  return (
   <div className="w-[74%] h-[100vh] p-7 flex items-center justify-center">
@@ -24,7 +26,8 @@ const SignupForm = () => {
     />
     <SocialSignup
     text="Sign up with Google"
-    onClick={handleGoogleSignup}
+    google={handleGoogleSignup}
+    github={handleGithubSignup}
      />
     <AuthDivider />
     <form

@@ -6,10 +6,12 @@ import { forgetPasswordLimiter, verifyOtpLimiter } from "../middleware/rateLimit
 import { authenticationUser } from "../middleware/auth.middleware.js";
 import { upload } from "../middleware/upload.middleware.js";
 import GoogleController from "../controller/google.controller.js";
+import GithubController from "../controller/github.controller.js";
 const router = express.Router();
 
 const userControllers = new userController()
 const GoogleControllers = new GoogleController()
+const GithubControllers = new GithubController()
 
 router.post(
     "/register",
@@ -73,6 +75,21 @@ router.get(
 router.get(
     "/google/callback",
     GoogleControllers.googleCallback.bind(GoogleControllers)
+)
+
+router.get(
+    "/github/signup",
+    GithubControllers.githubSignupInit.bind(GithubControllers)
+)
+
+router.get(
+    "/github/login",
+    GithubControllers.githubLoginInit.bind(GithubControllers)
+)
+
+router.get(
+    "/github/callback",
+    GithubControllers.githubCallback.bind(GithubControllers)
 )
 
 export default router;
